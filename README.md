@@ -31,11 +31,12 @@ allprojects {
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 ![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)
 
-Since multiple apps can play audio to the sample ouptut stream simultaneously, it is requred to handle AudioFocus correctly. However you do not want to call or set an alerm just to see if your impletemtation is working as you expected. 
+Since multiple apps can play audio to the sample ouptut stream simultaneously, it is requred to handle AudioFocus correctly.
+
+However you do not want to call or set an alerm just to see if your impletemtation is working as you expected. 
 
 AudioThief gain and release AudioFocus from your app.
 
-<br/>
 <br/>
 
 ## Usage
