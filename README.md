@@ -73,13 +73,13 @@ dependencies {
 
 #### 3. Gain and Release AudioFocus
 
-You can start a foreground service that gains AudioFocus via adb command, or simply start the srevice inside your code.
+You can start a foreground service that gains AudioFocus via adb command, or simply start the srevice inside your app.
 
 ```bash
 adb shell am startservice --ei AUDIO_REQUEST_KEY [audioRequestKey] your.package.name/com.takusemba.audiothief.AudioFocusGainService
 ```
 
-It holds AudioRequest until the foreground service stops.
+It holds AudioFocus until the foreground service stops.
 
 ```
 adb shell am stopservice --ei AUDIO_REQUEST_KEY [audioRequestKey] your.package.name/com.takusemba.audiothief.AudioFocusGainService
@@ -87,7 +87,7 @@ adb shell am stopservice --ei AUDIO_REQUEST_KEY [audioRequestKey] your.package.n
 
 ## AudioRequestKey
 
-AudioRequestKey defines how you gain AudioFocus. That would be 1, 2, 3, or 4.
+AudioRequestKey defines how you gain AudioFocus. That would be Int of 1, 2, 3, or 4.
 
 |  AudioRequestKey  |  FocusGain  |  Usage  |  Content Type  |
 | :---: | :---: | :---: | :---: |
