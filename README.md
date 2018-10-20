@@ -35,7 +35,7 @@ Since multiple apps can play audio to the sample ouptut stream simultaneously, i
 
 However you do not want to call or set an alerm just to see if your impletemtation is working as you expected. 
 
-AudioThief gain and release AudioFocus from your app.
+AudioThief gain AudioFocus from your app and release it back.
 
 <br/>
 
