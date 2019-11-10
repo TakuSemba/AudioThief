@@ -5,8 +5,8 @@ buildscript {
       groupId: "com.github.takusemba",
       artifactId: "audiothief",
 
-      libraryVersionCode: 1,
-      libraryVersionName: "1.0.2",
+      libraryVersionCode: 2,
+      libraryVersionName: "1.0.3",
 
       compileSdkVersion: 28,
       minSdkVersion: 19,
