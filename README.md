@@ -10,15 +10,6 @@
 dependencies {
     implementation 'com.github.takusemba:audiothief:x.x.x'
 }
-
-// build.gradle
-allprojects {
-  repositories {
-    // AudioFocus will be available in Jcenter soon.
-    maven { url "https://dl.bintray.com/takusemba/maven" }
-  }
-}
-
 ```
 
 <br/>
@@ -99,13 +90,6 @@ AudioRequestKey defines how you gain AudioFocus. That would be Int of 1, 2, 3, o
 
 ## Sample
 Clone this repo and check out the [app](https://github.com/TakuSemba/AudioThief/tree/master/app) module.
-
-## Change Log
-
-### Version: 1.0.1
-
-  * remove support library dependency
-
 
 ## Author
 
