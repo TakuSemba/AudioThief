@@ -1,64 +1,8 @@
+apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.github.dcendents.android-maven'
 
-def getBintrayUserProperty() {
-  return hasProperty('bintrayUser') ? bintrayUser : ""
-}
-
-def getBintrayApiKeyProperty() {
-  return hasProperty('bintrayApiKey') ? bintrayApiKey : ""
-}
-
-bintray {
-
-  user = bintrayUserProperty
-  key = bintrayApiKeyProperty
-
-  group = GROUP
-  version = LIBRARY_VERSION_NAME
-  configurations = ['archives']
-  pkg {
-    repo = POM_REPO
-    name = POM_NAME
-    desc = POM_DESCRIPTION
-    websiteUrl = POM_URL
-    issueTrackerUrl = ISSUE_URL
-    vcsUrl = POM_SCM_URL
-    licenses = ['Apache-2.0']
-    labels = ['android']
-    publicDownloadNumbers = true
-  }
-}
-
-install {
-  repositories.mavenInstaller {
-    pom {
-      project {
-        packaging 'aar'
-        name ARTIFACT_ID
-        url POM_URL
-        licenses {
-          license {
-            name POM_LICENSE_NAME
-            url POM_LICENSE_URL
-          }
-        }
-        developers {
-          developer {
-            id POM_DEVELOPER_ID
-            name POM_DEVELOPER_NAME
-            email POM_DEVELOPER_EMAIL
-          }
-        }
-        scm {
-          connection POM_SCM_CONNECTION
-          developerConnection POM_SCM_CONNECTION
-          url POM_URL
-        }
-      }
-    }
-  }
-}
+version configs.libraryVersionName
+group configs.groupId
 
 task sourcesJar(type: Jar) {
   from android.sourceSets.main.java.srcDirs
@@ -68,6 +12,7 @@ task sourcesJar(type: Jar) {
 task javadoc(type: Javadoc) {
   source = android.sourceSets.main.java.srcDirs
   classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+  excludes = ['**/*.kt']
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -80,14 +25,50 @@ artifacts {
   archives sourcesJar
 }
 
-afterEvaluate {
-  javadoc.classpath += files(android.libraryVariants.collect { variant ->
-    variant.javaCompiler.classpath.files
-  })
+project.afterEvaluate {
+  publishing {
+    publications {
+      Production(MavenPublication) {
+        artifact "$buildDir/outputs/aar/audiothief-release.aar"
+        groupId configs.groupId
+        artifactId configs.artifactId
+        version configs.libraryVersionName
+
+        pom.withXml {
+          def dependenciesNode = asNode().appendNode('dependencies')
+
+          // Iterate over the implementation dependencies (we don't want the test ones), adding a <dependency> node for each
+          configurations.implementation.allDependencies.each {
+            // Ensure dependencies such as fileTree are not included in the pom.
+            if (it.name != 'unspecified') {
+              def dependencyNode = dependenciesNode.appendNode('dependency')
+              dependencyNode.appendNode('groupId', it.group)
+              dependencyNode.appendNode('artifactId', it.name)
+              dependencyNode.appendNode('version', it.version)
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
-allprojects {
-  tasks.withType(Javadoc) {
-    excludes = ['**/*.kt']
+bintray {
+  user = project.hasProperty('bintrayUser') ? project.bintrayUser : ""
+  key = project.hasProperty('bintrayApiKey') ? project.bintrayApiKey : ""
+  publications = ['Production']
+  configurations = ['archives']
+  dryRun = false
+  override = true
+  pkg {
+    repo = 'maven'
+    name = configs.artifactId
+    publish = true
+    publicDownloadNumbers = true
+    licenses = ['Apache-2.0']
+    version {
+      name = configs.libraryVersionName
+      released = new Date()
+    }
   }
 }

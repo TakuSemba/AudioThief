@@ -2,16 +2,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-  compileSdkVersion COMPILE_SDK_VERSION as int
+  compileSdkVersion configs.compileSdkVersion
   defaultConfig {
-    minSdkVersion MIN_SDK_VERSION as int
-    targetSdkVersion TARGET_SDK_VERSION as int
-    versionName LIBRARY_VERSION_NAME
+    minSdkVersion configs.minSdkVersion
+    targetSdkVersion configs.targetSdkVersion
+    versionCode configs.libraryVersionCode
+    versionName configs.libraryVersionName
   }
 }
 
 dependencies {
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+  implementation deps.kotlin.stdlib
 }
 
 apply from: '../publish.gradle'
