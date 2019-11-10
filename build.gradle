@@ -26,8 +26,8 @@ buildscript {
       ],
       exoplayer: [
           core: "com.google.android.exoplayer:exoplayer-core:${versions.exoplayer}",
-          hls: "com.google.android.exoplayer:exoplayer-hls:{versions.exoplayer}",
-          ui: "com.google.android.exoplayer:exoplayer-ui:{versions.exoplayer}",
+          hls: "com.google.android.exoplayer:exoplayer-hls:${versions.exoplayer}",
+          ui: "com.google.android.exoplayer:exoplayer-ui:${versions.exoplayer}",
       ],
       androidx: [
           appcompat: "androidx.appcompat:appcompat:${versions.androidx}",
