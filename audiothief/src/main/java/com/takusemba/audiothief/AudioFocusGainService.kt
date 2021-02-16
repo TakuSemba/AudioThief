@@ -49,9 +49,7 @@ class AudioFocusGainService : Service() {
 
     if (!intent.hasExtra(AUDIO_REQUEST_KEY)) throw IllegalStateException("invalid intent key")
 
-    val audioRequestKey: Int = intent.getIntExtra(AUDIO_REQUEST_KEY, -1)
-
-    val audioRequest = when (audioRequestKey) {
+    val audioRequest = when (intent.getIntExtra(AUDIO_REQUEST_KEY, -1)) {
       AUDIOFOCUS_GAIN_KEY -> AudioRequest.GAIN
       AUDIOFOCUS_GAIN_TRANSIENT_KEY -> AudioRequest.GAIN_TRANSIENT
       AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK_KEY -> AudioRequest.GAIN_TRANSIENT_MAY_DUCK
@@ -80,7 +78,7 @@ class AudioFocusGainService : Service() {
     notificationManager.notify(C.NOTIFICATION_ID, notification)
     startForeground(C.FOREGROUND_ID, notification)
 
-    return Service.START_NOT_STICKY
+    return START_NOT_STICKY
   }
 
   override fun onDestroy() {

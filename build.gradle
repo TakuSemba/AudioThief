@@ -13,12 +13,12 @@ buildscript {
       licenseName: "The Apache Software License, Version 2.0",
       licenseUrl: "http://www.apache.org/licenses/LICENSE-2.0.txt",
 
-      libraryVersionCode: 2,
-      libraryVersionName: "1.0.3",
+      libraryVersionCode: 3,
+      libraryVersionName: "1.0.4",
 
-      compileSdkVersion: 28,
+      compileSdkVersion: 30,
       minSdkVersion: 19,
-      targetSdkVersion: 28,
+      targetSdkVersion: 30,
   ]
   ext.versions = [
       kotlin: '1.4.20',
